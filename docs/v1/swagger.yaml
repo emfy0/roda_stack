@@ -1,0 +1,445 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "API V1",
+    "version": "v1"
+  },
+  "produces": "application/json",
+  "paths": {
+    "/api/v1/posts": {
+      "get": {
+        "summary": "Get all posts",
+        "description": "Get all posts",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "Get all posts: returns a valid 200 response": {
+                    "value": {
+                      "posts": [
+                        {
+                          "id": 1,
+                          "description": "description1",
+                          "dislikes": 0,
+                          "likes": 0,
+                          "title": "title1"
+                        },
+                        {
+                          "id": 2,
+                          "description": "description2",
+                          "dislikes": 0,
+                          "likes": 0,
+                          "title": "title2"
+                        },
+                        {
+                          "id": 3,
+                          "description": "description3",
+                          "dislikes": 0,
+                          "likes": 0,
+                          "title": "title3"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create post",
+        "description": "Create post",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "Create post: returns a valid 200 response": {
+                    "value": {
+                      "post": {
+                        "id": 4,
+                        "description": "post description",
+                        "dislikes": 0,
+                        "likes": 0,
+                        "title": "post title"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "Create post: returns 403 response": {
+                    "value": {
+                      "status": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/posts/my": {
+      "get": {
+        "summary": "Get my posts",
+        "description": "Get my posts",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "Get my posts: returns a valid 200 response": {
+                    "value": {
+                      "posts": [
+                        {
+                          "id": 5,
+                          "description": "description4",
+                          "dislikes": 0,
+                          "likes": 0,
+                          "title": "title4"
+                        },
+                        {
+                          "id": 6,
+                          "description": "description5",
+                          "dislikes": 0,
+                          "likes": 0,
+                          "title": "title5"
+                        },
+                        {
+                          "id": 7,
+                          "description": "description6",
+                          "dislikes": 0,
+                          "likes": 0,
+                          "title": "title6"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "Get my posts: returns 403 response": {
+                    "value": {
+                      "status": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/posts/{id}/like": {
+      "put": {
+        "summary": "Like post",
+        "description": "Like post",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "Like post: returns a valid 200 response": {
+                    "value": {
+                      "post": {
+                        "id": 8,
+                        "description": "description7",
+                        "dislikes": 0,
+                        "likes": 1,
+                        "title": "title7"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/posts/{id}/dislike": {
+      "put": {
+        "summary": "Disike post",
+        "description": "Dislike post",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "Disike post: returns a valid 200 response": {
+                    "value": {
+                      "post": {
+                        "id": 9,
+                        "description": "description8",
+                        "dislikes": 1,
+                        "likes": 0,
+                        "title": "title8"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/register": {
+      "post": {
+        "summary": "Register user",
+        "description": "Creates new user and sets session cookie",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "required": true,
+            "description": "Username",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "required": true,
+            "description": "Password",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "Register user: returns a valid 200 response": {
+                    "value": {
+                      "user": {
+                        "username": "Nagibator337"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "Register user: returns 422 response": {
+                    "value": {
+                      "status": "validation_error",
+                      "validation_errors": {
+                        "username": [
+                          "must be present"
+                        ],
+                        "password": [
+                          "must be present"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/login": {
+      "post": {
+        "summary": "Login user",
+        "description": "Login user and sets session cookie",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "required": true,
+            "description": "Username",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "required": true,
+            "description": "Password",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "Login user: returns a valid 200 response": {
+                    "value": {
+                      "user": {
+                        "username": "Nagibator337"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "Login user: returns 422 response": {
+                    "value": {
+                      "status": "validation_error",
+                      "validation_errors": {
+                        "username": [
+                          "must be present"
+                        ],
+                        "password": [
+                          "must be present"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Incorrect credentials provided",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "Login user: returns 400 response": {
+                    "value": {
+                      "status": "error",
+                      "error_message": "invalid_username_or_password"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/me": {
+      "get": {
+        "summary": "Get me",
+        "description": "Get user",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "Get me: returns a valid 200 response": {
+                    "value": {
+                      "user": {
+                        "username": "title2"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Incorrect credentials provided",
+            "content": {
+              "application/json": {
+                "schema": {},
+                "examples": {
+                  "Get me: returns 404 response": {
+                    "value": {
+                      "status": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

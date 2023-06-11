@@ -1,0 +1,37 @@
+appName: posts
+
+postgres:
+  enabled: true
+  image: postgres:15.3-alpine
+  dbName: posts_prod
+  storage:
+    size:
+      limited: true
+      value: 1Gi
+  secrets:
+    user:
+      name: db-user
+      key: username
+    password:
+      name: db-user-pass
+      key: password
+
+redis: 
+  enabled: false
+  image: redis:3.2-alpine
+
+migration:
+  enabled: true
+  args: ['rake db:migrate']
+  createDb:
+    args: ['rake db:create || true']
+ingress:
+  hostname: posts.development-env.ru
+
+app:
+  image: ghcr.io/emfy0/roda_posts:latest
+  args: ['agoo -p 3000']
+  secrets:
+    secretKeyBase:
+      name: secret-key-base
+      key: secret-key-base

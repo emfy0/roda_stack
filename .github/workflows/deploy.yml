@@ -1,0 +1,46 @@
+name: Deploy production
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy_production:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+
+    - name: Build the Docker image
+      run: |
+        docker pull ghcr.io/emfy0/roda_posts:latest
+        docker build -t ghcr.io/emfy0/roda_posts:latest . --platform linux/arm64
+    - name: Push docker image
+      env:
+        CR_PAT: ${{ secrets.DOCKER_REGESTRY_TOKEN }}
+      run: |
+        echo $CR_PAT | docker login ghcr.io -u emfy0 --password-stdin
+        docker push ghcr.io/emfy0/roda_posts:latest
+
+    - name: Setup credentials
+      env:
+        KUBECONFIG_FILE: ${{ secrets.KUBECONFIGFILE }}
+        KUBECONFIG_FOLDER: ${{ github.workspace }}/kube_config
+        KUBECONFIG: ${{ github.workspace }}/kube_config/config
+      run: |
+        mkdir -p $KUBECONFIG_FOLDER
+        echo "$KUBECONFIG_FILE" > $KUBECONFIG
+
+    - name: Deploy
+      env:
+        KUBECONFIG: ${{ github.workspace }}/kube_config/config
+      run: |
+        helm upgrade posts-prod .deploy/roda --install \
+          -f .deploy/roda/values.yaml \
+          --namespace posts-prod \
+          --create-namespace
+
+    - name: Cleanup
+      run: |
+        rm -rf $KUBECONFIG_FOLDER

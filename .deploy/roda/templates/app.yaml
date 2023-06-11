@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.appName }}-roda
+  labels:
+    app: {{ .Values.appName }}
+spec:
+  ports:
+    - port: 3000
+  selector:
+    app: {{ .Values.appName }}
+    tier: roda
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}-roda
+  lables: {{ .Values.appName }}
+spec:
+  replicas: 1
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+      tier: roda
+  template:
+    metadata:
+      name: {{ .Values.appName }}-roda
+      labels:
+        app: {{ .Values.appName }}
+        tier: roda
+        date: "{{ now | unixEpoch }}"
+    spec:
+      containers:
+      - name: {{ .Values.appName }}-roda
+        image: {{ .Values.app.image }}
+        args: {{ .Values.app.args }}
+        env:
+        {{- include "app.env" . | nindent 8 }}
+        ports:
+        - containerPort: 3000

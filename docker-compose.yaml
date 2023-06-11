@@ -1,0 +1,92 @@
+x-common-environment: &common-environment
+  RACK_ENV: development
+  REDIS_URL: redis://redis:6379/1
+  DATABASE_URL: postgresql://postgres:password@pg/roda_main_dev
+  TEST_DATABASE_URL: postgresql://postgres:password@pg/roda_main_test
+  SECRET_KEY: 8d42446ea47b94a1c88f67d370b99120c6fb2696b9e7a79abfa6e5832a2ed66f
+
+services:
+  app:
+    build: .
+    command: bash
+    # command: bundle exec agoo -p 3000
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/code
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    environment:
+      <<: *common-environment
+    depends_on:
+      - pg
+      - redis
+
+  sidekiq:
+    build: .
+    command: bin/sidekiq
+    volumes:
+      - .:/code
+    restart: unless-stopped
+    environment:
+      <<: *common-environment
+    depends_on:
+      - pg
+      - redis
+      - app
+
+  anycable_rpc:
+    build: .
+    command: bundle exec anycable
+    stdin_open: true
+    tty: true
+    environment:
+      <<: *common-environment
+      ANYCABLE_REDIS_URL: redis://redis/8
+      ANYCABLE_RPC_HOST: 0.0.0.0:3000
+    volumes:
+      - .:/code
+    restart: unless-stopped
+    depends_on:
+      - pg
+      - mailhog
+      - redis
+      - app
+
+  anycable_server:
+    image: anycable/anycable-go:1.2.2
+    environment:
+      ANYCABLE_REDIS_URL: redis://redis/1
+      ANYCABLE_RPC_HOST: anycable_rpc:3000
+      ANYCABLE_HOST: '0.0.0.0'
+    ports:
+      - '4000:8080'
+    restart: unless-stopped
+    depends_on:
+      - pg
+      - mailhog
+      - anycable_rpc
+
+  mailhog:
+    #image: mailhog/mailhog
+    image: 0emfy/mailhog
+    logging:
+      driver: 'none'  # disable saving logs
+    ports:
+      #- 1025:1025 # smtp server
+      - 4001:8025 # web ui
+
+  pg:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: password
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./tmp/db_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis
+    command: redis-server
+    restart: unless-stopped

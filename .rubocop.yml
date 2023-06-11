@@ -1,0 +1,41 @@
+require:
+  - rubocop-rake
+  - rubocop-factory_bot
+  - rubocop-rspec
+  - rubocop-sequel
+
+Metrics/AbcSize:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+RSpec/RepeatedDescription:
+  Enabled: false
+
+RSpec/RepeatedExample:
+  Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+RSpec/ExpectInHook:
+  Enabled: false
+
+Rake/Desc:
+  Enabled: false
+
+RSpec/ScatteredSetup:
+  Enabled: false

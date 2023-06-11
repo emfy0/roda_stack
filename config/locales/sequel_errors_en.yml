@@ -1,0 +1,19 @@
+en:
+  sequel_errors:
+    exact_length: is not %{exact} characters
+    format: is invalid
+    includes: 'is not in range or set: %{range}'
+    integer: is not a number
+    length_range: is too short or too long
+    max_length: is longer than %{max} characters
+    nil_message: is not present
+    max_value: is greater than maximum allowed value
+    min_length: is shorter than %{min} characters
+    min_value: is less than minimum allowed value
+    not_null: is not present
+    no_null_byte: contains a null byte
+    numeric: is not a number
+    operator: is not %{operator} %{rhs}
+    type: is not a valid %{type}
+    presence: is not present
+    unique: is already taken
