@@ -10,6 +10,26 @@
       "get": {
         "summary": "Get all posts",
         "description": "Get all posts",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Limit <= 25 (default 25)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "description": "Offset (default 0)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful response",
@@ -41,7 +61,12 @@
                           "likes": 0,
                           "title": "title3"
                         }
-                      ]
+                      ],
+                      "meta": {
+                        "total": 3,
+                        "limit": 25,
+                        "offset": 0
+                      }
                     }
                   }
                 }
@@ -115,6 +140,26 @@
       "get": {
         "summary": "Get my posts",
         "description": "Get my posts",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Limit <= 25 (default 25)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "description": "Offset (default 0)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful response",
@@ -146,7 +191,12 @@
                           "likes": 0,
                           "title": "title6"
                         }
-                      ]
+                      ],
+                      "meta": {
+                        "total": 3,
+                        "limit": 25,
+                        "offset": 0
+                      }
                     }
                   }
                 }

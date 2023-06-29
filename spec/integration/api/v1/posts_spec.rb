@@ -12,12 +12,20 @@ describe 'Posts', type: :doc, swagger_doc: 'v1/swagger.yaml' do
       response '200', 'Successful response' do
         set_default_schema!
 
+        parameter name: :limit, in: :query, required: false, type: :string,
+                  description: 'Limit <= 25 (default 25)'
+        parameter name: :offset, in: :query, required: false, type: :string,
+                  description: 'Offset (default 0)'
+
         let!(:posts) do
           create_list(:post, 3)
         end
 
         let(:expected_response) do
-          { posts: posts.map(&:to_hash).map { |post| post.tap { |p| p.delete(:user_id) } } }
+          {
+            posts: posts.map(&:to_hash).map { |post| post.tap { |p| p.delete(:user_id) } },
+            meta: { limit: 25, offset: 0, total: posts.count }
+          }
         end
 
         it 'returns a valid 200 response' do |example|
@@ -72,6 +80,11 @@ describe 'Posts', type: :doc, swagger_doc: 'v1/swagger.yaml' do
       response '200', 'Successful response' do
         set_default_schema!
 
+        parameter name: :limit, in: :query, required: false, type: :string,
+                  description: 'Limit <= 25 (default 25)'
+        parameter name: :offset, in: :query, required: false, type: :string,
+                  description: 'Offset (default 0)'
+
         let(:user) { create(:user) }
 
         let!(:posts) do
@@ -79,7 +92,10 @@ describe 'Posts', type: :doc, swagger_doc: 'v1/swagger.yaml' do
         end
 
         let(:expected_response) do
-          { posts: posts.map(&:to_hash).map { |post| post.tap { |p| p.delete(:user_id) } } }
+          {
+            posts: posts.map(&:to_hash).map { |post| post.tap { |p| p.delete(:user_id) } },
+            meta: { limit: 25, offset: 0, total: posts.count }
+          }
         end
 
         it 'returns a valid 200 response' do |example|

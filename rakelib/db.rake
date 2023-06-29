@@ -28,7 +28,7 @@ end
 namespace :db do
   desc 'Annotate Sequel models'
   task :annotate do
-    require_relative '../config/application'
+    require_relative '../config/environment'
     require 'sequel/annotate'
 
     Sequel::Annotate.annotate(Dir['app/models/**/*.rb'], position: :before)
@@ -80,7 +80,7 @@ namespace :db do
 
   namespace :migrate do
     task :connect do
-      require_relative '../config/application'
+      require_relative '../config/environment'
       Sequel.extension :migration
     end
 

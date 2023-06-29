@@ -27,10 +27,10 @@ class App < Roda
     '{"status":"not_found"}'
   end
 
-  if ENVIRONMENT == :production
-    plugin :error_handler do |_e|
-      '500'
-    end
+  plugin :error_handler do |e|
+    LOGGER.fatal e.class
+    LOGGER.fatal e.message
+    LOGGER.fatal e.backtrace.join("\n")
   end
 
   plugin :public if ENVIRONMENT != :production
