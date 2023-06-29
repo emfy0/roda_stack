@@ -14,7 +14,7 @@ WORKDIR /code
 COPY Gemfile ./
 COPY Gemfile.lock ./
 
-RUN bundle install
+RUN bundle install --jobs $(getconf _NPROCESSORS_ONLN)
 
 COPY . .
 
