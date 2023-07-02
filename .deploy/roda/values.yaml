@@ -30,7 +30,7 @@ ingress:
 
 app:
   image: ghcr.io/emfy0/roda_posts:latest
-  args: ['agoo -p 3000 -t 4 -w 4']
+  args: ['puma -p 3000']
   secrets:
     secretKeyBase:
       name: secret-key-base

@@ -2,10 +2,9 @@
 
 source 'https://rubygems.org'
 
-ruby '~> 3.1'
+ruby '~> 3.2'
 
 gem 'activesupport'
-gem 'agoo'
 gem 'anycable'
 gem 'bcrypt'
 gem 'blueprinter'
@@ -15,6 +14,7 @@ gem 'i18n'
 gem 'litecable'
 gem 'mail'
 gem 'oj'
+gem 'puma'
 gem 'rake'
 gem 'redis'
 gem 'roda'

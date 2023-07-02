@@ -8,7 +8,6 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.4)
       public_suffix (>= 2.0.2, < 6.0)
-    agoo (2.15.5)
     anycable (1.3.1)
       anycable-core (= 1.3.1)
       grpc (~> 1.37)
@@ -96,6 +95,7 @@ GEM
       timeout
     net-smtp (0.3.3)
       net-protocol
+    nio4r (2.5.9)
     oj (3.11.8)
     ox (2.14.16)
     parallel (1.23.0)
@@ -107,6 +107,8 @@ GEM
       coderay (~> 1.1)
       method_source (~> 1.0)
     public_suffix (5.0.1)
+    puma (6.3.0)
+      nio4r (~> 2.0)
     racc (1.7.1)
     rack (3.0.8)
     rack-test (2.0.2)
@@ -193,7 +195,6 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport
-  agoo
   anycable
   awesome_print
   bcrypt
@@ -213,6 +214,7 @@ DEPENDENCIES
   mail
   oj
   pry
+  puma
   rack-test
   rake
   redis
@@ -232,7 +234,7 @@ DEPENDENCIES
   zeitwerk
 
 RUBY VERSION
-   ruby 3.1.4p223
+   ruby 3.2.2p53
 
 BUNDLED WITH
    2.3.26
